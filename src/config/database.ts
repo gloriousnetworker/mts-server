@@ -1,18 +1,14 @@
-import admin from 'firebase-admin';
-import { env } from './env.js';
+import { PrismaClient } from '@prisma/client';
 import { logger } from './logger.js';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: env.FIREBASE_PROJECT_ID,
-      clientEmail: env.FIREBASE_CLIENT_EMAIL,
-      privateKey: env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    }),
-  });
-  logger.info('Firebase Admin initialized');
-}
+const prisma = new PrismaClient({
+  log: [
+    { emit: 'event', level: 'error' },
+  ],
+});
 
-export const db = admin.firestore();
-export const auth = admin.auth();
-export { admin };
+prisma.$on('error', (e) => {
+  logger.error(e, 'Prisma error');
+});
+
+export { prisma };
