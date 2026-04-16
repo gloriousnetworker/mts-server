@@ -120,6 +120,45 @@ const options: swaggerJsdoc.Options = {
             submittedDate: { type: 'string', format: 'date-time', nullable: true },
           },
         },
+        Certificate: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            studentId: { type: 'string', format: 'uuid' },
+            studentName: { type: 'string' },
+            courseId: { type: 'string', format: 'uuid' },
+            courseName: { type: 'string' },
+            issueDate: { type: 'string', format: 'date-time' },
+            certificateNumber: { type: 'string', example: 'MT-2026-001234' },
+            status: { type: 'string', enum: ['valid', 'revoked'] },
+          },
+        },
+        BlogPost: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            title: { type: 'string' },
+            content: { type: 'string' },
+            excerpt: { type: 'string' },
+            author: { type: 'string' },
+            date: { type: 'string', format: 'date-time' },
+            category: { type: 'string' },
+            image: { type: 'string' },
+            tags: { type: 'array', items: { type: 'string' } },
+          },
+        },
+        GalleryItem: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            title: { type: 'string' },
+            category: { type: 'string', enum: ['trainings', 'workshops', 'events', 'graduation', 'conferences'] },
+            type: { type: 'string', enum: ['image', 'video'] },
+            url: { type: 'string' },
+            thumbnail: { type: 'string', nullable: true },
+            date: { type: 'string', format: 'date-time' },
+          },
+        },
         Enrollment: {
           type: 'object',
           properties: {

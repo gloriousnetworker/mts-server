@@ -17,6 +17,10 @@ import studentsRoutes from './modules/students/students.routes.js';
 import staffRoutes from './modules/staff/staff.routes.js';
 import paymentsRoutes from './modules/payments/payments.routes.js';
 import assignmentsRoutes from './modules/assignments/assignments.routes.js';
+import certificatesRoutes from './modules/certificates/certificates.routes.js';
+import blogRoutes from './modules/blog/blog.routes.js';
+import galleryRoutes from './modules/gallery/gallery.routes.js';
+import statsRoutes from './modules/stats/stats.routes.js';
 
 const app = express();
 
@@ -67,6 +71,10 @@ app.use('/students', studentsRoutes);
 app.use('/staff', staffRoutes);
 app.use('/payments', paymentsRoutes);
 app.use('/assignments', assignmentsRoutes);
+app.use('/certificates', certificatesRoutes);
+app.use('/blog', blogRoutes);
+app.use('/gallery', galleryRoutes);
+app.use('/stats', statsRoutes);
 
 // Error handling
 app.use(notFoundHandler);
