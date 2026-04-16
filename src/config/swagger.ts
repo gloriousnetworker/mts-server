@@ -73,6 +73,53 @@ const options: swaggerJsdoc.Options = {
             isFeatured: { type: 'boolean' },
           },
         },
+        Staff: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            name: { type: 'string' },
+            email: { type: 'string' },
+            position: { type: 'string' },
+            bio: { type: 'string' },
+            photo: { type: 'string' },
+            skills: { type: 'array', items: { type: 'string' } },
+            social: {
+              type: 'object',
+              nullable: true,
+              properties: {
+                linkedin: { type: 'string' },
+                twitter: { type: 'string' },
+                github: { type: 'string' },
+              },
+            },
+            createdAt: { type: 'string', format: 'date-time' },
+          },
+        },
+        Payment: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            studentId: { type: 'string', format: 'uuid' },
+            courseId: { type: 'string', format: 'uuid' },
+            amount: { type: 'number' },
+            date: { type: 'string', format: 'date-time' },
+            status: { type: 'string', enum: ['pending', 'confirmed', 'failed'] },
+            method: { type: 'string' },
+          },
+        },
+        Assignment: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', format: 'uuid' },
+            courseId: { type: 'string', format: 'uuid' },
+            title: { type: 'string' },
+            description: { type: 'string' },
+            dueDate: { type: 'string', format: 'date-time', nullable: true },
+            status: { type: 'string', enum: ['pending', 'submitted', 'graded'] },
+            grade: { type: 'number', nullable: true },
+            submittedDate: { type: 'string', format: 'date-time', nullable: true },
+          },
+        },
         Enrollment: {
           type: 'object',
           properties: {

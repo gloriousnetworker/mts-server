@@ -13,6 +13,10 @@ import { swaggerSpec } from './config/swagger.js';
 import authRoutes from './modules/auth/auth.routes.js';
 import coursesRoutes from './modules/courses/courses.routes.js';
 import enrollmentsRoutes from './modules/enrollments/enrollments.routes.js';
+import studentsRoutes from './modules/students/students.routes.js';
+import staffRoutes from './modules/staff/staff.routes.js';
+import paymentsRoutes from './modules/payments/payments.routes.js';
+import assignmentsRoutes from './modules/assignments/assignments.routes.js';
 
 const app = express();
 
@@ -59,6 +63,10 @@ app.get('/api-docs.json', (_req, res) => { res.json(swaggerSpec); });
 app.use('/auth', authRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/enrollments', enrollmentsRoutes);
+app.use('/students', studentsRoutes);
+app.use('/staff', staffRoutes);
+app.use('/payments', paymentsRoutes);
+app.use('/assignments', assignmentsRoutes);
 
 // Error handling
 app.use(notFoundHandler);
