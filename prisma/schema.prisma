@@ -179,15 +179,19 @@ model Certificate {
 }
 
 model Payment {
-  id        String        @id @default(uuid())
-  studentId String        @map("student_id")
-  courseId   String        @map("course_id")
-  amount    Float
-  date      DateTime      @default(now())
-  status    PaymentStatus @default(pending)
-  method    String        @default("Bank Transfer")
-  createdAt DateTime      @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt @map("updated_at")
+  id            String        @id @default(uuid())
+  studentId     String        @map("student_id")
+  courseId       String        @map("course_id")
+  amount        Float
+  date          DateTime      @default(now())
+  status        PaymentStatus @default(pending)
+  method        String        @default("Bank Transfer")
+  reference     String?       @unique
+  paystackId    String?       @map("paystack_id")
+  channel       String?
+  currency      String        @default("NGN")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
 
   student User   @relation(fields: [studentId], references: [id])
   course  Course @relation(fields: [courseId], references: [id])
