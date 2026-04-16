@@ -11,6 +11,8 @@ import { notFoundHandler } from './middleware/not-found.js';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.js';
 import authRoutes from './modules/auth/auth.routes.js';
+import coursesRoutes from './modules/courses/courses.routes.js';
+import enrollmentsRoutes from './modules/enrollments/enrollments.routes.js';
 
 const app = express();
 
@@ -55,6 +57,8 @@ app.get('/api-docs.json', (_req, res) => { res.json(swaggerSpec); });
 
 // ─── API Routes ──────────────────────────────────────────────
 app.use('/auth', authRoutes);
+app.use('/courses', coursesRoutes);
+app.use('/enrollments', enrollmentsRoutes);
 
 // Error handling
 app.use(notFoundHandler);
