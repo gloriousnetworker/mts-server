@@ -1,1 +1,1 @@
-web: node dist/index.js
+web: npx prisma db push --skip-generate && node dist/index.js
