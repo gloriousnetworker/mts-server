@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import pinoHttp from 'pino-http';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
 import { defaultLimiter } from './middleware/rate-limiter.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/not-found.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
+import authRoutes from './modules/auth/auth.routes.js';
 
 const app = express();
 
@@ -30,9 +34,10 @@ app.use(cors({
 // Rate limiting
 app.use(defaultLimiter);
 
-// Body parsing
+// Body parsing & cookies
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Request logging
 if (env.NODE_ENV !== 'test') {
@@ -44,7 +49,12 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// --- Module routes will be registered here in later phases ---
+// ─── API Docs ────────────────────────────────────────────────
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/api-docs.json', (_req, res) => { res.json(swaggerSpec); });
+
+// ─── API Routes ──────────────────────────────────────────────
+app.use('/auth', authRoutes);
 
 // Error handling
 app.use(notFoundHandler);

@@ -9,5 +9,6 @@ export function errorHandler(err: Error, _req: Request, res: Response, _next: Ne
   }
 
   logger.error(err, 'Unhandled error');
-  return sendError(res, 'Internal server error', 500, 'INTERNAL_ERROR');
+  const message = process.env.NODE_ENV !== 'production' ? err.message : 'Internal server error';
+  return sendError(res, message, 500, 'INTERNAL_ERROR');
 }

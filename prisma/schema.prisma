@@ -63,11 +63,13 @@ model User {
   role          UserRole  @default(student)
   avatar        String?
   phone         String?
-  refreshToken  String?   @map("refresh_token")
-  resetToken    String?   @map("reset_token")
-  resetTokenExp DateTime? @map("reset_token_exp")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
+  refreshToken     String?   @map("refresh_token")
+  resetToken       String?   @map("reset_token")
+  resetTokenExp    DateTime? @map("reset_token_exp")
+  twoFactorSecret  String?   @map("two_factor_secret")
+  twoFactorEnabled Boolean   @default(false) @map("two_factor_enabled")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
 
   enrollments   Enrollment[]
   payments      Payment[]
