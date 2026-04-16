@@ -8,7 +8,7 @@ import { initFirebase } from './config/firebase.js';
 // Initialize Firebase for push notifications (optional)
 initFirebase();
 
-const server = app.listen(env.PORT, () => {
+const server = app.listen(env.PORT, '0.0.0.0', () => {
   logger.info(`Server running on port ${env.PORT} in ${env.NODE_ENV} mode`);
 });
 
