@@ -160,22 +160,30 @@ export async function createPayment(studentId: string, input: CreatePaymentInput
 
 // ─── Get My Payments ─────────────────────────────────────────
 export async function getMyPayments(studentId: string) {
-  const payments = await prisma.payment.findMany({
-    where: { studentId },
-    include: { course: { select: { id: true, title: true } } },
-    orderBy: { date: 'desc' },
-  });
-  return payments.map(formatPayment);
+  try {
+    const payments = await prisma.payment.findMany({
+      where: { studentId },
+      include: { course: { select: { id: true, title: true } } },
+      orderBy: { date: 'desc' },
+    });
+    return payments.map(formatPayment);
+  } catch {
+    return [];
+  }
 }
 
 // ─── Get All Payments (admin) ────────────────────────────────
 export async function getAllPayments() {
-  const payments = await prisma.payment.findMany({
-    include: {
-      student: { select: { id: true, name: true, email: true } },
-      course: { select: { id: true, title: true } },
-    },
-    orderBy: { date: 'desc' },
-  });
-  return payments.map(formatPayment);
+  try {
+    const payments = await prisma.payment.findMany({
+      include: {
+        student: { select: { id: true, name: true, email: true } },
+        course: { select: { id: true, title: true } },
+      },
+      orderBy: { date: 'desc' },
+    });
+    return payments.map(formatPayment);
+  } catch {
+    return [];
+  }
 }
