@@ -8,7 +8,7 @@ export async function register(req: Request, res: Response, next: NextFunction) 
   try {
     const result = await authService.register(req.body);
     setAuthCookies(res, result.accessToken, result.refreshToken);
-    sendSuccess(res, { user: result.user }, 201);
+    sendSuccess(res, { user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken }, 201);
   } catch (err) {
     next(err);
   }
@@ -23,7 +23,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     }
 
     setAuthCookies(res, result.accessToken!, result.refreshToken!);
-    sendSuccess(res, { user: result.user });
+    sendSuccess(res, { user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
   } catch (err) {
     next(err);
   }
@@ -33,7 +33,7 @@ export async function verifyLoginTwoFactor(req: Request, res: Response, next: Ne
   try {
     const result = await authService.verifyLoginTwoFactor(req.body);
     setAuthCookies(res, result.accessToken, result.refreshToken);
-    sendSuccess(res, { user: result.user });
+    sendSuccess(res, { user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
   } catch (err) {
     next(err);
   }
@@ -48,7 +48,7 @@ export async function refreshToken(req: Request, res: Response, next: NextFuncti
 
     const result = await authService.refresh(token);
     setAuthCookies(res, result.accessToken, result.refreshToken);
-    sendSuccess(res, { user: result.user });
+    sendSuccess(res, { user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
   } catch (err) {
     next(err);
   }
@@ -87,10 +87,9 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
 export async function forgotPassword(req: Request, res: Response, next: NextFunction) {
   try {
     const result = await authService.forgotPassword(req.body);
-    // In production, don't expose the token — send via email
     const data: Record<string, string> = { message: 'If the email exists, a reset link has been sent' };
     if (process.env.NODE_ENV !== 'production' && result?.resetToken) {
-      data.resetToken = result.resetToken; // only for dev/testing
+      data.resetToken = result.resetToken;
     }
     sendSuccess(res, data);
   } catch (err) {
