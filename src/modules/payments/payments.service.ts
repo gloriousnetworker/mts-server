@@ -172,6 +172,40 @@ export async function getMyPayments(studentId: string) {
   }
 }
 
+// ─── Update Payment Status (admin) ───────────────────────────
+export async function updatePaymentStatus(id: string, status: string) {
+  try {
+    const payment = await prisma.payment.findUnique({ where: { id } });
+    if (!payment) throw ApiError.notFound('Payment not found');
+
+    const updated = await prisma.payment.update({
+      where: { id },
+      data: { status: status as any },
+      include: {
+        student: { select: { id: true, name: true, email: true } },
+        course: { select: { id: true, title: true } },
+      },
+    });
+    return formatPayment(updated);
+  } catch (err: any) {
+    if (err.statusCode) throw err;
+    throw ApiError.internal('Failed to update payment');
+  }
+}
+
+// ─── Delete Payment (admin) ──────────────────────────────────
+export async function deletePayment(id: string) {
+  try {
+    const payment = await prisma.payment.findUnique({ where: { id } });
+    if (!payment) throw ApiError.notFound('Payment not found');
+
+    await prisma.payment.delete({ where: { id } });
+  } catch (err: any) {
+    if (err.statusCode) throw err;
+    throw ApiError.internal('Failed to delete payment');
+  }
+}
+
 // ─── Get All Payments (admin) ────────────────────────────────
 export async function getAllPayments() {
   try {

@@ -74,4 +74,8 @@ router.get('/', blogController.listPosts);
  */
 router.post('/', authenticate, authorize('staff', 'admin'), validate(createBlogPostSchema), blogController.createPost);
 
+router.put('/:id', authenticate, authorize('staff', 'admin'), blogController.updatePost);
+
+router.delete('/:id', authenticate, authorize('admin'), blogController.deletePost);
+
 export default router;

@@ -28,3 +28,12 @@ export async function getMyCertificates(req: Request, res: Response, next: NextF
     next(err);
   }
 }
+
+export async function deleteCertificate(req: Request, res: Response, next: NextFunction) {
+  try {
+    await certificatesService.deleteCertificate(req.params.id as string);
+    sendSuccess(res, { message: 'Certificate deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+}

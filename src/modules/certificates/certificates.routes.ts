@@ -97,4 +97,6 @@ router.get('/:id/verify', certificatesController.verifyCertificate);
  */
 router.get('/my', authenticate, authorize('student'), certificatesController.getMyCertificates);
 
+router.delete('/:id', authenticate, authorize('admin'), certificatesController.deleteCertificate);
+
 export default router;

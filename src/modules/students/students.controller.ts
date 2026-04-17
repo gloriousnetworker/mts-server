@@ -19,3 +19,12 @@ export async function updateStudent(req: Request, res: Response, next: NextFunct
     next(err);
   }
 }
+
+export async function deleteStudent(req: Request, res: Response, next: NextFunction) {
+  try {
+    await studentsService.deleteStudent(req.params.id as string);
+    sendSuccess(res, { message: 'Student deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+}

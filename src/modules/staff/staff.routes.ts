@@ -106,4 +106,8 @@ router.get('/public', staffController.listStaff);
  */
 router.post('/', authenticate, authorize('admin'), validate(createStaffSchema), staffController.createStaff);
 
+router.put('/:id', authenticate, authorize('admin'), staffController.updateStaff);
+
+router.delete('/:id', authenticate, authorize('admin'), staffController.deleteStaff);
+
 export default router;

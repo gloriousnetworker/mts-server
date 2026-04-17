@@ -89,3 +89,10 @@ export async function getMyCertificates(studentId: string) {
   });
   return certificates.map(formatCertificate);
 }
+
+export async function deleteCertificate(id: string) {
+  const cert = await prisma.certificate.findUnique({ where: { id } });
+  if (!cert) throw ApiError.notFound('Certificate not found');
+
+  await prisma.certificate.delete({ where: { id } });
+}

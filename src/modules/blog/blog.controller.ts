@@ -22,3 +22,21 @@ export async function createPost(req: Request, res: Response, next: NextFunction
     next(err);
   }
 }
+
+export async function updatePost(req: Request, res: Response, next: NextFunction) {
+  try {
+    const post = await blogService.updatePost(req.params.id as string, req.body);
+    sendSuccess(res, post);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deletePost(req: Request, res: Response, next: NextFunction) {
+  try {
+    await blogService.deletePost(req.params.id as string);
+    sendSuccess(res, { message: 'Blog post deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+}

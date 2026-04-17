@@ -91,4 +91,6 @@ router.get('/', authenticate, authorize('staff', 'admin'), studentsController.li
  */
 router.put('/:id', authenticate, authorize('staff', 'admin'), validate(studentIdParamSchema, 'params'), validate(updateStudentSchema), studentsController.updateStudent);
 
+router.delete('/:id', authenticate, authorize('admin'), validate(studentIdParamSchema, 'params'), studentsController.deleteStudent);
+
 export default router;

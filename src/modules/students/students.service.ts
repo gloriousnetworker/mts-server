@@ -45,3 +45,16 @@ export async function updateStudent(id: string, input: UpdateStudentInput) {
 
   return formatStudent(updated);
 }
+
+export async function deleteStudent(id: string) {
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user || user.role !== 'student') {
+    throw ApiError.notFound('Student not found');
+  }
+
+  await prisma.assignment.deleteMany({ where: { studentId: id } });
+  await prisma.certificate.deleteMany({ where: { studentId: id } });
+  await prisma.payment.deleteMany({ where: { studentId: id } });
+  await prisma.enrollment.deleteMany({ where: { studentId: id } });
+  await prisma.user.delete({ where: { id } });
+}

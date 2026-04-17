@@ -19,3 +19,21 @@ export async function createStaff(req: Request, res: Response, next: NextFunctio
     next(err);
   }
 }
+
+export async function updateStaff(req: Request, res: Response, next: NextFunction) {
+  try {
+    const staff = await staffService.updateStaff(req.params.id as string, req.body);
+    sendSuccess(res, staff);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deleteStaff(req: Request, res: Response, next: NextFunction) {
+  try {
+    await staffService.deleteStaff(req.params.id as string);
+    sendSuccess(res, { message: 'Staff member deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+}

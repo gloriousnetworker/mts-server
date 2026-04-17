@@ -66,3 +66,21 @@ export async function getAllPayments(_req: Request, res: Response, next: NextFun
     next(err);
   }
 }
+
+export async function updatePaymentStatus(req: Request, res: Response, next: NextFunction) {
+  try {
+    const payment = await paymentsService.updatePaymentStatus(req.params.id as string, req.body.status);
+    sendSuccess(res, payment);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deletePayment(req: Request, res: Response, next: NextFunction) {
+  try {
+    await paymentsService.deletePayment(req.params.id as string);
+    sendSuccess(res, { message: 'Payment deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+}

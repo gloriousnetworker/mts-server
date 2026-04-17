@@ -1,4 +1,5 @@
 import { prisma } from '../../config/database.js';
+import { ApiError } from '../../utils/api-error.js';
 import type { CreateBlogPostInput } from './blog.schema.js';
 
 function formatPost(post: any) {
@@ -28,4 +29,19 @@ export async function createPost(input: CreateBlogPostInput, authorName: string)
     },
   });
   return formatPost(post);
+}
+
+export async function updatePost(id: string, input: Partial<CreateBlogPostInput>) {
+  const existing = await prisma.blogPost.findUnique({ where: { id } });
+  if (!existing) throw ApiError.notFound('Blog post not found');
+
+  const post = await prisma.blogPost.update({ where: { id }, data: input });
+  return formatPost(post);
+}
+
+export async function deletePost(id: string) {
+  const existing = await prisma.blogPost.findUnique({ where: { id } });
+  if (!existing) throw ApiError.notFound('Blog post not found');
+
+  await prisma.blogPost.delete({ where: { id } });
 }

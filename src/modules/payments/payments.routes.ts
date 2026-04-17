@@ -169,4 +169,8 @@ router.get('/my', authenticate, authorize('student'), paymentsController.getMyPa
  */
 router.get('/', authenticate, authorize('admin'), paymentsController.getAllPayments);
 
+router.put('/:id', authenticate, authorize('admin'), paymentsController.updatePaymentStatus);
+
+router.delete('/:id', authenticate, authorize('admin'), paymentsController.deletePayment);
+
 export default router;
