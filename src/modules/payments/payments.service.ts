@@ -13,8 +13,8 @@ function formatPayment(payment: any) {
     date: payment.date,
     status: payment.status,
     method: payment.method,
-    reference: payment.reference,
-    currency: payment.currency,
+    reference: payment.reference ?? null,
+    currency: payment.currency ?? 'NGN',
     student: payment.student ? { id: payment.student.id, name: payment.student.name, email: payment.student.email } : undefined,
     course: payment.course ? { id: payment.course.id, title: payment.course.title } : undefined,
   };
